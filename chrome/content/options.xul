@@ -1,0 +1,37 @@
+<?xml version="1.0"?> 
+<!--
+    Google Tasks sync for Mozilla Thunderbird
+-->
+ 
+<vbox xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+	<setting pref="extensions.google_tasks_sync.attach_to" type="menulist" title="Attach interface to (restart required)">
+	  <menulist>
+		<menupopup>
+		  <menuitem value="folder_pane" label="Folder Pane"/>
+		  <menuitem value="today_pane" label="Lightning's Today Pane"/>
+		</menupopup>
+	  </menulist>
+	</setting>
+	
+	<setting pref="extensions.google_tasks_sync.due_date_format" type="menulist" title="Due date format">
+	  <menulist>
+		<menupopup>
+		  <menuitem value="12/31" label="12/31"/>
+		  <menuitem value="12/31/2013" label="12/31/2013"/>
+		  <menuitem value="31.12" label="31.12"/>
+		  <menuitem value="31.12.2013" label="31.12.2013"/>
+		  <menuitem value="2013-12-31" label="2013-12-31"/>
+		</menupopup>
+	  </menulist>
+	</setting>
+
+	<setting type="bool" title="Clear local data and authentication tokens on next startup (backups will remain)" pref="extensions.google_tasks_sync.clear_all_on_startup" /> 
+
+	<setting type="control" title="Backup viewer">
+		<button label="View backups" onclick="
+			window.open('chrome://google_tasks_sync/content/backup_viewer.xul', 'gt_tasks_sync_somewindow', 'chrome, centerscreen, resizable, width=450, height=600');
+		"/>
+	</setting>
+
+</vbox>

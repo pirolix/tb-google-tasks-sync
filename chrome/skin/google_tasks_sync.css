@@ -1,0 +1,220 @@
+/*
+	Google Tasks Sync for Mozilla Thunderbird
+*/
+
+splitter#gt_tasks_sync_splitter
+{
+	height: 4px;
+	min-height: 4px;
+	max-height: 4px;
+	opacity: 0.4;
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+}
+
+vbox#gt_tasks_sync_interfacewrapper
+{
+	height: 360px;
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+}
+
+/* main interface */
+
+#gt_tasks_sync_taskboxheader {
+	padding: 0;
+}
+
+#gt_tasks_sync_tasklistmenu {
+	padding: 0;
+	margin: 0;
+}
+
+#gt_tasks_sync_full_sync_button .toolbarbutton-icon {
+  width: 16px;
+  height: 16px;
+}
+
+#gt_tasks_sync_new_task_button .toolbarbutton-icon {
+  width: 16px;
+  height: 16px;
+}
+
+
+#gt_tasks_sync_full_sync_dummy .toolbarbutton-icon {
+  width: 16px;
+  height: 16px;
+}
+
+#gt_tasks_sync_new_task_dummy .toolbarbutton-icon {
+  width: 16px;
+  height: 16px;
+}
+
+vbox#gt_tasks_sync_taskcontainer, #gt_tasks_sync_reorderingcontainer, vbox#gt_tasks_sync_dummycontainer, vbox#gt_tasks_sync_testingcontainer
+{
+	overflow: auto;
+	background-color: -moz-field;
+}
+
+#gt_tasks_sync_taskcontainer {
+	padding-top: 2px;
+}
+
+box.gt_tasks_sync_c_taskwrapper {
+	padding: 0 0 0 0;
+	border: 1px solid -moz-field;
+}
+
+box.gt_tasks_sync_c_taskwrapper_faded {
+	padding: 0 0 0 0;
+	border: 1px solid -moz-field;
+	opacity: 0.7;
+}
+
+box.gt_tasks_sync_c_taskwrapper:hover {
+	padding: 0 0 0 0;
+	background: linear-gradient(to top, -moz-CellHighlight, -moz-Field);
+	border: 1px solid -moz-CellHighlight;
+	border-radius: 3px;
+}
+
+box.gt_tasks_sync_c_taskwrapper_faded:hover {
+	padding: 0 0 0 0;
+	background: linear-gradient(to top, -moz-CellHighlight, -moz-Field);
+	border: 1px solid -moz-CellHighlight;
+	border-radius: 3px;
+	opacity: 0.7;
+}
+
+box.gt_tasks_sync_c_taskwrapper_selected {
+	padding: 0 0 0 0;
+	border: 1px solid -moz-field;
+	background: -moz-html-CellHighlight
+}
+
+box.gt_tasks_sync_c_taskwrapper_faded_selected { /*currently identical to non-faded, but checked when deselecting task to know which style to return to*/
+	padding: 0 0 0 0;
+	border: 1px solid -moz-field;
+	background: -moz-html-CellHighlight
+}
+
+checkbox.gt_tasks_sync_c_taskcheckbox {
+	opacity: 0.8;
+	padding: 1px 1px 1px 1px;
+	margin: 4px 3px 2px 3px;
+}
+
+box.gt_tasks_sync_c_taskmainbox {
+	padding: 0 0 0 0;
+	margin: 0 0 0 -10px;
+}
+
+label.gt_tasks_sync_c_tasktitle
+{
+	padding: 1px 2px 1px 0; /*some right padding to separate title from due date*/
+	margin: 3px 0 0px 2px;
+}
+label.gt_tasks_sync_c_tasktitledummy
+{
+	opacity: 0.8;
+	padding: 1px 2px 1px 0; /*some right padding to separate title from due date*/
+	margin: 3px 0 0px 2px;
+}
+
+label.gt_tasks_sync_c_taskdue
+{
+	padding: 1px 0 1px 0;
+	margin: 3px 0 0 0;
+}
+
+label.gt_tasks_sync_c_taskoverdue
+{
+	font-weight: bold;
+	padding: 1px 0 1px 0;
+	margin: 3px 0 0 0;
+}
+
+label.gt_tasks_sync_c_tasknotes
+{
+	opacity: 0.8;
+	padding: 1px 0 1px 0;
+	margin: 3px 0 1px -6px;
+}
+
+vbox.gt_tasks_sync_c_taskauxbox {
+	margin-right: 3px;
+	padding-right: 9px; /*some padding on the right to make room for the arrow*/
+	background-repeat: no-repeat;
+	background-position: right center; 
+}
+
+vbox.gt_tasks_sync_c_taskauxbox:hover {
+	background-image: url("chrome://google_tasks_sync/skin/edit-task.png");
+}
+
+/* task editing interface (also used for creating new tasks) */
+
+sidebarheader.gt_tasks_sync_c_newtaskheader {
+	padding: 3px;
+}
+
+sidebarheader.gt_tasks_sync_c_reorderboxheader {
+	padding: 3px 3px 3px 0;
+}
+
+textbox.gt_tasks_sync_c_newtasktitle {
+	padding: 0 3px 0 3px;
+	margin: 0 0 0 -10px;
+}
+
+datepicker#gt_tasks_sync_newtaskdatepicker {
+	margin-bottom: 8px;
+	margin-top: 1px;
+    visibility: collapse;
+}
+
+#gt_tasks_sync_delete_button .toolbarbutton-icon {
+  width: 16px;
+  height: 16px;
+}
+
+#gt_tasks_sync_duedatelabel {
+	margin-top: 4px; margin-right: 46px;
+}
+
+#gt_tasks_sync_add_due_date_button .toolbarbutton-icon {
+  width: 16px;
+  height: 16px;
+}
+
+#gt_tasks_sync_clear_due_date_button .toolbarbutton-icon {
+  width: 16px;
+  height: 16px;
+}
+
+#gt_tasks_sync_clear_due_date_button {
+  visibility: collapse;
+}
+
+/* reordering interface */
+label#gt_tasks_sync_reorderboxlabel {
+	margin: 5px 2px 2px 4px;
+}
+
+/* backup viewer */
+
+label.gt_tasks_sync_c_backuplabel {
+	margin-top: 5px;
+}
+
+row.gt_tasks_sync_c_backuprow {
+	padding-bottom: 4px;
+}
+
+row.gt_tasks_sync_c_backuprow:last-of-type {
+	padding-bottom: 0;
+}
+
+checkbox.gt_tasks_sync_c_backupcheckbox {
+}

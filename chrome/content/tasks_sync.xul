@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<!--
+    Google Tasks sync for Mozilla Thunderbird
+-->
+
+<?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
+<?xml-stylesheet href="chrome://google_tasks_sync/skin/google_tasks_sync.css" type="text/css"?>
+
+<overlay id="gt_tasks_sync_overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<!-- code that moves the overlay to the appropriate location is in gt_tasks_sync.init -->
+	<script type="text/javascript" src="tasks_sync.js"/>
+	<script type="text/javascript" src="fileio_bridge.js"/>
+	<script type="text/javascript" src="parsing_functions.js"/>
+	<script type="text/javascript" src="interface_functions.js"/>
+	<script type="text/javascript" src="reordering_interface.js"/>
+	<script type="text/javascript" src="network_functions.js"/>
+
+	<vbox id='folderPaneBox'> <!--was today-pane-panel -->
+		<splitter id="gt_tasks_sync_splitter" orient="vertical" />
+		<vbox id='gt_tasks_sync_interfacewrapper' persist="height">
+			<!--shown when a full sync is running to indicate that the interface is disabled-->
+			<vbox id="gt_tasks_sync_welcomebox" flex='1' align="center" onclick='gt_tasks_sync.welcome()' collapsed='true'>
+				<label value="Google Tasks Sync" style='font-family: serif; font-size: 150%; margin: 4px 0 3px 0;' />
+				<label value="Click here to get started." style='opacity: 0.8;' />
+			</vbox>
+			
+			<vbox id='gt_tasks_sync_dummytaskbox' flex='1' collapsed="true">
+				<sidebarheader>
+					<menulist flex='1' disabled="true">
+					  <menupopup>
+						<!--<menuitem label="Synchronizing..." value="dummy"/>-->
+					  </menupopup>
+					</menulist>
+					<spacer flex="1" />
+					<hbox>
+						<toolbarbutton id="gt_tasks_sync_new_task_dummy" disabled="true" class="toolbarbutton-1" image='chrome://google_tasks_sync/skin/list-add.png'/>
+						<toolbarbutton id="gt_tasks_sync_full_sync_dummy" disabled="true" type='menu-button' class="toolbarbutton-1" image='chrome://google_tasks_sync/skin/sync-hourglass.png'/>
+					</hbox>
+				</sidebarheader>
+				<vbox flex='1' id="gt_tasks_sync_dummycontainer">
+					<box class="gt_tasks_sync_c_taskwrapper" flex='0'>
+						<!--<checkbox class='gt_tasks_sync_c_taskcheckbox' />-->
+						<!--<box class="gt_tasks_sync_c_taskmainbox" onclick="gt_tasks_sync.startEditing(event);" flex='1'>-->
+							<label class="gt_tasks_sync_c_tasktitledummy" id="gt_tasks_sync_dummylabel" flex='1' crop='end' value="Synchronizing..." />
+							<!--<label class="gt_tasks_sync_c_taskdue" value="07/13" />-->
+						<!--</box>-->
+					</box>
+				</vbox>
+			</vbox>
+		
+			<vbox id='gt_tasks_sync_taskbox' flex='1'>
+				<sidebarheader id="gt_tasks_sync_taskboxheader">
+					<menulist id="gt_tasks_sync_tasklistmenu" flex='1' oncommand="gt_tasks_sync.handleMenulistChange()">
+					  <menupopup id="gt_tasks_sync_tasklistselection">
+						<!--<menuitem label="choose a tasklist" value="dummy"/>-->
+					  </menupopup>
+					</menulist>
+					<spacer flex="1" />
+					<hbox>
+						<toolbarbutton id="gt_tasks_sync_new_task_button" tooltiptext="New task" oncommand="gt_tasks_sync.startAdding();" class="toolbarbutton-1" image='chrome://google_tasks_sync/skin/list-add.png'/>
+						<toolbarbutton id="gt_tasks_sync_full_sync_button" tooltiptext="Sync all tasklists" oncommand="gt_tasks_sync.startFullSync();" type='menu-button' class="toolbarbutton-1" image='chrome://google_tasks_sync/skin/sync.png'>
+							<menupopup>
+								<menuitem id='gt_tasks_sync_menuitem_sort' label="Sort by due date" type='checkbox' oncommand="gt_tasks_sync.toggleSorting(event); event.stopPropagation();"/>
+								<menuitem id='gt_tasks_sync_menuitem_hide_completed' label="Hide completed tasks" type='checkbox' oncommand="gt_tasks_sync.toggleHideCompletedTasks(event); event.stopPropagation();"/>
+								<menuseparator />
+								<menuitem id='gt_tasks_sync_menuitem_reorder' label="Rearrange tasks..." oncommand="gt_tasks_sync.startReordering(); event.stopPropagation();"/>
+								<menuitem id='gt_tasks_sync_menuitem_clear_completed' label="Delete completed tasks" oncommand="gt_tasks_sync.clearCompletedTasks(); event.stopPropagation();"/>
+							</menupopup>
+						</toolbarbutton>
+					</hbox>
+				</sidebarheader>
+				<vbox id="gt_tasks_sync_taskcontainer" flex='1'>
+					<!--<box class="gt_tasks_sync_c_taskwrapper" id='tasklistId/taskId' flex='0' align='start'>
+						<checkbox class='gt_tasks_sync_c_taskcheckbox' />
+						<vbox class='gt_tasks_sync_c_taskauxbox' flex='1'>
+							<box class="gt_tasks_sync_c_taskmainbox">
+								<label class="gt_tasks_sync_c_tasktitle" flex='1' crop='end' value="Very, very long task name!" />
+								<label class="gt_tasks_sync_c_taskdue" value="07/13" />
+							</box>
+							<label class="gt_tasks_sync_c_tasknotes" crop='end' value="Caution: this is Sparta. The well is there to toss people in." />
+						</vbox>
+					</box>-->
+				</vbox>
+			</vbox>
+			
+			<vbox id="gt_tasks_sync_newtaskbox" flex='1' collapsed='true'>
+				<sidebarheader class='gt_tasks_sync_c_newtaskheader'>
+					<checkbox id="gt_tasks_sync_newtaskcheckbox" class='gt_tasks_sync_c_newtaskcheckbox' />
+					<textbox id="gt_tasks_sync_newtasktitle" flex='1' class='gt_tasks_sync_c_newtasktitle' />
+					<toolbarbutton id="gt_tasks_sync_delete_button" tooltiptext="Delete task" oncommand="gt_tasks_sync.deleteTask();" class="toolbarbutton-1" image='chrome://google_tasks_sync/skin/Andy_Trash_Can.png'/>
+				</sidebarheader>
+				<textbox id='gt_tasks_sync_newtasknotes' multiline='true' flex='1' />
+				<vbox align='center' id='gt_tasks_sync_containsdatepicker'>
+					<box>
+						<label id='gt_tasks_sync_duedatelabel' value="Due date:" />
+						<toolbarbutton id="gt_tasks_sync_add_due_date_button" tooltiptext="Add due date" oncommand="gt_tasks_sync.addDueDate(event);" class="toolbarbutton-1" image='chrome://google_tasks_sync/skin/add-due-date.png'/>
+						<toolbarbutton id="gt_tasks_sync_clear_due_date_button" tooltiptext="Clear due date" oncommand="gt_tasks_sync.clearDueDate(event);" class="toolbarbutton-1" image='chrome://google_tasks_sync/skin/clear-due-date.png'/>
+					</box>
+					<datepicker id="gt_tasks_sync_newtaskdatepicker" disabled="true" type="popup" />
+					<box id="gt_tasks_sync_newtaskfooter">
+						<button class='dialog-button' onclick='gt_tasks_sync.finishEditing()' label='OK' />
+						<button class='dialog-button' onclick='gt_tasks_sync.cancelEditing()' label='Cancel' />
+					</box>
+				</vbox>
+			</vbox>
+			
+			<vbox id="gt_tasks_sync_reorderbox" flex='1' collapsed='true'>
+				<sidebarheader class='gt_tasks_sync_c_reorderboxheader'>
+					<label id='gt_tasks_sync_reorderboxlabel' flex='1' crop='end' value='Rearranging tasks' />
+					<toolbarbutton id="gt_tasks_sync_reordering_help_button" tooltiptext="Help" oncommand="gt_tasks_sync.toggleReorderingHelp();" class="toolbarbutton-1" image='chrome://google_tasks_sync/skin/blue_help_button.png'/>
+				</sidebarheader>
+				<label id='gt_tasks_sync_reorderinghelp'>Select a task with the mouse, then use control plus the arrow keys to move it.</label>
+				<vbox id="gt_tasks_sync_reorderingcontainer" flex='1'>
+					<!--<box class="gt_tasks_sync_c_taskwrapper" id='tasklistId/taskId' flex='0' align='start'>
+						<checkbox class='gt_tasks_sync_c_taskcheckbox' />
+						<vbox class='gt_tasks_sync_c_taskauxbox' flex='1' onclick='alert("foo");'>
+							<box class="gt_tasks_sync_c_taskmainbox">
+								<label class="gt_tasks_sync_c_tasktitle" flex='1' crop='end' value="Very, very long task name!" />
+								<label class="gt_tasks_sync_c_taskdue" value="07/13" />
+							</box>
+							<label class="gt_tasks_sync_c_tasknotes" crop='end' value="Caution: this is Sparta. The well is there to toss people in." />
+						</vbox>
+					</box>-->
+				</vbox>
+				<box id="gt_tasks_sync_newtaskfooter">
+					<button class='dialog-button' onclick='gt_tasks_sync.finishReordering()' label='OK' />
+					<button class='dialog-button' onclick='gt_tasks_sync.cancelReordering()' label='Cancel' />
+				</box>
+			</vbox>
+		</vbox>
+		
+		<keyset id='gt_tasks_sync_reorderingkeys' disabled='true'>
+			<key modifiers="control" keycode="VK_UP" oncommand="gt_tasks_sync.moveTaskUp()"/>
+			<key modifiers="control" keycode="VK_DOWN" oncommand="gt_tasks_sync.moveTaskDown()"/>
+			<key modifiers="control" keycode="VK_LEFT" oncommand="gt_tasks_sync.moveTaskLeft()"/>
+			<key modifiers="control" keycode="VK_RIGHT" oncommand="gt_tasks_sync.moveTaskRight()"/>
+		</keyset>
+		
+	</vbox>
+	
+	<!--<menupopup id="mailContext">
+
+	    <menuitem id="mailContext-gt_tasks_sync-convert-task-menuitem"
+              label="Convert to Google task"
+              accesskey="g"
+              oncommand="gt_tasks_sync.onDropMessage(gFolderDisplay.selectedMessage)" />
+
+	</menupopup> -->
+
+	<menupopup id="mailContext"> <!-- need to start defining at this level in case Lightning isn't installed -->
+	
+		<menu id="mailContext-calendar-convert-menu" insertafter="mailContext-moveToFolderAgain" label="Convert To" accesskey="n">
+		
+			<menupopup id="mailContext-calendar-convert-menupopup">
+
+				<menuitem id="gt_tasks_sync_mailContext-convert-task-menuitem"
+					label="Google task"
+					accesskey="g"
+					oncommand="gt_tasks_sync.onDropMessage(gFolderDisplay.selectedMessage)" />
+
+			</menupopup>
+		
+		</menu>
+		
+	</menupopup>
+	
+</overlay>

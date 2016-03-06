@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding='UTF-8' ?>
+<!--
+    Google Tasks sync for Mozilla Thunderbird
+-->
+
+<?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
+<?xml-stylesheet href="chrome://google_tasks_sync/skin/gt_tasks_sync.css" type="text/css"?>
+
+<window onload='gt_tasks_sync.backupViewerInit()' id="oc_backup_viewer_window" title="Backup viewer" orient="horizontal" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<script type="text/javascript" src="backup_viewer.js"/>
+	<script type="text/javascript" src="fileio_bridge.js"/>
+	<script type="text/javascript" src="jsio.js"/>
+
+	<grid flex='1'>
+		<columns>
+			<column style='padding: 8px 2px 8px 6px' />
+			<column flex="1" style='padding: 8px 10px 8px 2px' />
+		</columns>
+		<rows>
+			<row class="oc_c_backuprow">
+				<label class="oc_c_backuplabel" style='margin-top: 6px;' value="Snapshot:" />
+				<menulist id="oc_backupsnapshotlist" oncommand="gt_tasks_sync.switchSnapshot()">
+					<menupopup id='oc_backupsnapshotmenu' />
+				</menulist>
+			</row>
+			<row class="oc_c_backuprow">
+				<label class="oc_c_backuplabel" style='margin-top: 6px;' value="Tasklist or task:" />
+				<menulist id='oc_backupobjectlist' oncommand="gt_tasks_sync.switchTask()">
+					<menupopup id='oc_backupobjectmenu' />
+				</menulist>
+			</row>
+			<separator class="groove" style='margin-left: 5px; margin-right: 5px;' />
+			<row class="oc_c_backuprow">
+				<label id='oc_backuptitlelabel' class="oc_c_backuplabel" value="Status &amp; title:" />
+				<box>
+					<checkbox id='oc_backupcheckbox' disabled='true' />
+					<textbox id='oc_backuptitlebox' flex='1' readonly='true' style='margin-left: -8px;' />
+				</box>
+			</row>
+			<row flex='1' class="oc_c_backuprow">
+				<label class="oc_c_backuplabel" value="Notes:" />
+				<textbox id='oc_backupnotesbox' multiline='true' flex='3' readonly='true' />
+			</row>
+			<row class="oc_c_backuprow">
+				<label class="oc_c_backuplabel" value="Due date:" />
+				<textbox id='oc_backupduedatebox' flex='1' readonly='true' />
+			</row>
+			<row flex='1' class="oc_c_backuprow2">
+				<label class="oc_c_backuplabel" value="All fields:" />
+				<textbox id='oc_backupjsonbox' multiline='true' flex='2' readonly='true' />
+			</row>
+		</rows>
+	</grid>
+
+
+		<!--<textbox multiline='true' flex='1' />
+		<textbox multiline='true' style="height: 150px;" />-->
+
+</window>

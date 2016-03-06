@@ -1,0 +1,8 @@
+content google_tasks_sync chrome/content/
+content oauthorizer resources/oauthorizer/content/
+overlay	chrome://messenger/content/messenger.xul chrome://google_tasks_sync/content/tasks_sync.xul
+locale  oauthorizer     en-US		resources/oauthorizer/locale/en-US/
+skin	oauthorizer	classic/1.0	resources/oauthorizer/skin/
+skin	google_tasks_sync classic/1.0 chrome/skin/
+resource oauthorizer resources/oauthorizer/
+resource jsio resources/jsio/

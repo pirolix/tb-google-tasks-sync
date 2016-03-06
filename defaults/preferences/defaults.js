@@ -1,0 +1,11 @@
+pref("extensions.google_tasks_sync.access_token", "");
+pref("extensions.google_tasks_sync.refresh_token", "");
+pref("extensions.google_tasks_sync.token_type", "");
+pref("extensions.google_tasks_sync.expiration", "");
+pref("extensions.google_tasks_sync.last_sync_time", "");
+pref("extensions.google_tasks_sync.last_sync_time_minus_leeway", "");
+pref("extensions.google_tasks_sync.clear_all_on_startup", false);
+pref("extensions.google_tasks_sync.due_date_format", "12/31");
+pref("extensions.google_tasks_sync.attach_to", "today_pane");
+pref("extensions.google_tasks_sync.sort_by_due_date", false);
+pref("extensions.google_tasks_sync.hide_completed_tasks", false);
