@@ -85,10 +85,18 @@
 			menupopup.removeChild(menupopup.lastChild);
 		}
 		
+		// Sort TaskList by title
+		var ltOrder = [];
+		for( let i in gt_tasks_sync.localTasks )
+			ltOrder.push({ key: i, title: gt_tasks_sync.localTasks[i].header.title });
+		ltOrder.sort( function( a, b ){
+			return ( a.title < b.title ) ? -1 : 1;
+		});
 		//refill it
 		var menuitem;
-		for(var i in gt_tasks_sync.localTasks) 
+		for( let i in ltOrder )
 		{
+			i = ltOrder[i].key;
 			menuitem = document.createElement("menuitem");
 			menuitem.setAttribute("label", gt_tasks_sync.localTasks[i].header.title);
 			menuitem.setAttribute("value", gt_tasks_sync.localTasks[i].header.id);
