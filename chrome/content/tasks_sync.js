@@ -237,8 +237,13 @@ Services.scriptloader.loadSubScript("resource://jsio/jsio.js", gt_tasks_sync);
 			document.getElementById("gt_tasks_sync_newtasknotes").value = taskObjBuf.notes;
 		else
 			document.getElementById("gt_tasks_sync_newtasknotes").value = "";
-		if(taskObjBuf.due) { //workaround until I can figure out why setting the value property didn't work
+		if(taskObjBuf.due) { 
 			var datepicker = document.getElementById("gt_tasks_sync_newtaskdatepicker");
+			// The date in taskObjBuf is in ISO text format, so we have to convert it to the format required by the datepicker element
+			var duedate=new Date(taskObjBuf.due);
+			datepicker.value= duedate.getFullYear() + '-' + 
+				(duedate.getMonth()<9?'0':'') + (duedate.getMonth() + 1) + '-' +
+				(duedate.getDate()<10?'0':'') + duedate.getDate();
 			datepicker.disabled = false;
 			datepicker.style.visibility = "visible";
 			document.getElementById("gt_tasks_sync_clear_due_date_button").style.visibility = "visible";
