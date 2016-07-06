@@ -276,6 +276,10 @@ Services.scriptloader.loadSubScript("resource://jsio/jsio.js", gt_tasks_sync);
 	gt_tasks_sync.addDueDate = function(event) {
 		event.target.disabled = true;
 		var datepicker = document.getElementById("gt_tasks_sync_newtaskdatepicker");
+		var duedate=new Date(); // If we're adding a date, set it to the current date
+		datepicker.value= duedate.getFullYear() + '-' + 
+			(duedate.getMonth()<9?'0':'') + (duedate.getMonth() + 1) + '-' +
+			(duedate.getDate()<10?'0':'') + duedate.getDate();
 		datepicker.disabled = false;
 		datepicker.style.visibility = "visible";
 		document.getElementById("gt_tasks_sync_add_due_date_button").style.visibility = "collapse";
